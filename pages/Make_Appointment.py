@@ -18,6 +18,7 @@ class AppointmentPage:
         self.visit_date_field = (By.XPATH, "//input[@id='txt_visit_date']")
         self.comment_field = (By.XPATH, "//textarea[@id='txt_comment']")
         self.book_appointment_button = (By.XPATH, "//button[@id='btn-book-appointment']")
+        self.go_to_home=(By.XPATH,"//a[@class='btn btn-default']")
 
     def make_appointment(self):
         self.wait.until(EC.element_to_be_clickable(self.make_appointment_button)).click()
@@ -45,3 +46,6 @@ class AppointmentPage:
 
     def book_appointment(self):
         self.wait.until(EC.element_to_be_clickable(self.book_appointment_button)).click()
+
+    def go_home(self):
+        self.wait.until(EC.element_to_be_clickable(self.go_to_home)).click()
