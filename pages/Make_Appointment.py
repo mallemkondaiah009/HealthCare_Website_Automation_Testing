@@ -1,9 +1,12 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.support import expected_conditions as EC
 
 class AppointmentPage:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, 10)  # 10-second wait for elements to be interactable
+
         # Define locators
         self.make_appointment_button = (By.XPATH, "//a[@id='btn-make-appointment']")
         self.username_field = (By.XPATH, "//input[@id='txt-username']")
@@ -17,28 +20,28 @@ class AppointmentPage:
         self.book_appointment_button = (By.XPATH, "//button[@id='btn-book-appointment']")
 
     def make_appointment(self):
-        self.driver.find_element(*self.make_appointment_button).click()
+        self.wait.until(EC.element_to_be_clickable(self.make_appointment_button)).click()
 
     def login(self, username, password):
-        self.driver.find_element(*self.username_field).send_keys(username)
-        self.driver.find_element(*self.password_field).send_keys(password)
-        self.driver.find_element(*self.login_button).click()
+        self.wait.until(EC.visibility_of_element_located(self.username_field)).send_keys(username)
+        self.wait.until(EC.visibility_of_element_located(self.password_field)).send_keys(password)
+        self.wait.until(EC.element_to_be_clickable(self.login_button)).click()
 
     def select_facility(self, facility_name):
-        facility_dropdown_element = self.driver.find_element(*self.facility_dropdown)
+        facility_dropdown_element = self.wait.until(EC.visibility_of_element_located(self.facility_dropdown))
         Select(facility_dropdown_element).select_by_visible_text(facility_name)
 
     def enable_hospital_readmission(self):
-        self.driver.find_element(*self.hospital_readmission_checkbox).click()
+        self.wait.until(EC.element_to_be_clickable(self.hospital_readmission_checkbox)).click()
 
     def select_medicare_program(self):
-        self.driver.find_element(*self.medicare_radio).click()
+        self.wait.until(EC.element_to_be_clickable(self.medicare_radio)).click()
 
     def enter_visit_date(self, visit_date):
-        self.driver.find_element(*self.visit_date_field).send_keys(visit_date)
+        self.wait.until(EC.visibility_of_element_located(self.visit_date_field)).send_keys(visit_date)
 
     def enter_comment(self, comment):
-        self.driver.find_element(*self.comment_field).send_keys(comment)
+        self.wait.until(EC.visibility_of_element_located(self.comment_field)).send_keys(comment)
 
     def book_appointment(self):
-        self.driver.find_element(*self.book_appointment_button).click()
+        self.wait.until(EC.element_to_be_clickable(self.book_appointment_button)).click()
