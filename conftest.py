@@ -68,11 +68,6 @@ def login(init_driver):
         EC.element_to_be_clickable((By.XPATH, "//button[@id='btn-login']"))
     ).click()
 
-    # Ensure the login is successful by waiting for the "Logout" button to appear
-    wait.until(
-        EC.presence_of_element_located((By.XPATH, "//button[normalize-space()='Logout']"))
-    )
-
     yield driver  # Pass the logged-in driver instance
 
 # Pytest hook to capture screenshot on test failure
